@@ -35,8 +35,6 @@ See Table 4 in the paper for detailed results.
 
 ## Installation
 
-### Prerequisites
-
 - Python 3.8+
 - PyTorch
 - PyTorch Geometric
@@ -174,7 +172,7 @@ The `train.py` script performs 10-fold cross-validation on the scPDB dataset usi
 - **Loss Function**: BCEWithLogitsLoss with pos_weight to handle class imbalance.
 - **Evaluation Metrics**: Precision, Recall, F1-score based on DCC (Distance to Closest Centroid).
 - **Early Stopping**: Stops after 20 epochs without F1-score improvement.
-- **Output**: Saves the best model for each fold (`best_model_fold_{fold}.pt`) and metrics (`fold_metrics.txt`) in the output directory. The trained ProtGeoNet-Pocket models can be found in `https://drive.google.com/drive/folders/15t8f3GpLnKTqWI961JNWjzc4fRS_3EZ0`
+- **Output**: Saves the best model for each fold (`best_model_fold_{fold}.pt`) and metrics (`fold_metrics.txt`) in the output directory. Results are saved in `{dataset_name}_cross_validation_results.txt` in the output directory.
 
 To train the model:
 
@@ -184,7 +182,7 @@ python train.py
 
 ## Testing
 
-The `test.py` script evaluates the trained models on independent test sets (e.g., sc6k) using 10-fold cross-validation. It computes the following metrics:
+The `test.py` script evaluates the trained models on independent test sets  using 10-fold cross-validation. It computes the following metrics:
 
 - **DCA (Distance to Closest Atom)**: Success rate for top-n and top-(n+2) predictions.
 - **DCC (Distance to Closest Centroid)**: Success rate based on clustered pocket centroids.

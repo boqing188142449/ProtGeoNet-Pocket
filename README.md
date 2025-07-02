@@ -81,10 +81,10 @@ The following scripts process `.mol2` files from datasets like scPDB, PDBbind, a
   python ProtGeoNet-Pocket\Utils\mol2_file\generate_esm_features.py <protein_folder>
   ```
 
-- **`generate_portt5_features.py`**: Generates ProtT5 embeddings (1024D) from protein sequences extracted from `.mol2` files.
+- **`generate_prott5_features.py`**: Generates ProtT5 embeddings (1024D) from protein sequences extracted from `.mol2` files.
 
   ```bash
-  python ProtGeoNet-Pocket\Utils\mol2_file\generate_portt5_features.py <protein_folder>
+  python ProtGeoNet-Pocket\Utils\mol2_file\generate_prott5_features.py <protein_folder>
   ```
 
 - **`generate_binding_labels.py`**: Labels residues as binding sites if within 10 Å of ligand heavy atoms in `.mol2` files, saving labels as `.npy` files.
@@ -133,10 +133,10 @@ The following scripts process `.pdb` files from datasets like COACH420, HOLO4K, 
   python ProtGeoNet-Pocket\Utils\pdb_file\generate_esm_features.py <protein_folder>
   ```
 
-- **`generate_portt5_features.py`**: Generates ProtT5 embeddings (1024D) from protein sequences extracted from `.pdb` files.
+- **`generate_prott5_features.py`**: Generates ProtT5 embeddings (1024D) from protein sequences extracted from `.pdb` files.
 
   ```bash
-  python ProtGeoNet-Pocket\Utils\pdb_file\generate_portt5_features.py <protein_folder>
+  python ProtGeoNet-Pocket\Utils\pdb_file\generate_prott5_features.py <protein_folder>
   ```
 
 - **`generate_binding_labels.py`**: Labels residues as binding sites if within 10 Å of ligand heavy atoms in `.pdb` files, saving labels as `.npy` files.

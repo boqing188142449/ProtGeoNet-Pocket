@@ -21,24 +21,24 @@ def process_protein(protein_folder: str) -> None:
 
         print(f"Processing protein: {folder_name}")
         esm_file = os.path.join(protein_subfolder, f"{folder_name}_esm.npy")
-        portt5_file = os.path.join(protein_subfolder, f"{folder_name}_portt5.npy")
+        prott5_file = os.path.join(protein_subfolder, f"{folder_name}_prott5.npy")
         output_file = os.path.join(protein_subfolder, f"{folder_name}_features.npy")
 
         if os.path.isfile(output_file):
             print(f"{output_file} already exists, skipping.")
             continue
 
-        if os.path.isfile(esm_file) and os.path.isfile(portt5_file):
+        if os.path.isfile(esm_file) and os.path.isfile(prott5_file):
             try:
                 esm_features = np.load(esm_file)
-                portt5_features = np.load(portt5_file)
-                combined_features = np.concatenate((esm_features, portt5_features), axis=1)
+                prott5_features = np.load(prott5_file)
+                combined_features = np.concatenate((esm_features, prott5_features), axis=1)
                 np.save(output_file, combined_features)
                 print(f"Saved combined features to {output_file} (shape: {combined_features.shape})")
             except Exception as e:
                 print(f"Error combining features for protein {folder_name}: {e}")
         else:
-            missing_files = [f for f in [esm_file, portt5_file] if not os.path.isfile(f)]
+            missing_files = [f for f in [esm_file, prott5_file] if not os.path.isfile(f)]
             print(f"Error: Missing files for protein {folder_name}: {missing_files}")
 
 

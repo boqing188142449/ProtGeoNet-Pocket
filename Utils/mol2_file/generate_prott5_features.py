@@ -1,7 +1,8 @@
 """
-Generates ProtT5 embeddings for protein sequences from PDB files.
+Generates ProtT5 embeddings for protein sequences from .mol2 files.
 """
 
+import re
 import sys
 import os
 import numpy as np
@@ -10,6 +11,7 @@ from collections import OrderedDict
 from transformers import T5Tokenizer, T5EncoderModel
 
 
+# Load ProtT5 model
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 cache_dir = os.getenv('MODEL_CACHE_DIR', '/media/2t/zhangzhi/ProtGeoNet-Pocket/model_cache')
 tokenizer = T5Tokenizer.from_pretrained(cache_dir, do_lower_case=False)
@@ -38,21 +40,28 @@ def generate_embeddings(sequence: str) -> np.ndarray:
     return embedding_repr.last_hidden_state[0, :len(sequence)].cpu().numpy()
 
 
-def extract_sequence_from_pdb(pdb_path: str) -> str:
-    """Extract amino acid sequence from a PDB file."""
-    with open(pdb_path, 'r') as f:
-        lines = f.readlines()
+def extract_sequence_from_mol2(mol2_path: str) -> str:
+    """Extract amino acid sequence from a .mol2 file."""
+    with open(mol2_path, 'r') as file:
+        lines = file.readlines()
 
     residues = OrderedDict()
+    in_atom_section = False
     for line in lines:
-        if line.startswith('ATOM'):
-            try:
-                residue_name = line[17:20].strip()
-                residue_id = int(line[22:26].strip())
+        if line.strip() == "@<TRIPOS>ATOM":
+            in_atom_section = True
+            continue
+        if in_atom_section and line.strip() == "@<TRIPOS>BOND":
+            break
+        if in_atom_section:
+            match = re.match(
+                r'\s*(\d+)\s+([A-Za-z0-9]+)\s+([-+]?\d+\.\d+)\s+([-+]?\d+\.\d+)\s+([-+]?\d+\.\d+)\s+([A-Za-z0-9.]+)\s+(\d+)\s+([A-Za-z0-9]+)\s+([0-9.-]+)',
+                line)
+            if match:
+                residue_id = int(match.group(7))
+                residue_name = re.sub(r'\d+$', '', match.group(8))
                 if residue_name in AMINO_ACID_MAP:
                     residues[residue_id] = residue_name
-            except ValueError:
-                continue
 
     return ''.join(AMINO_ACID_MAP[residue] for residue in residues.values())
 
@@ -64,26 +73,26 @@ def process_protein(protein_folder: str) -> None:
         if not os.path.isdir(protein_subfolder):
             continue
 
-        portt5_file = os.path.join(protein_subfolder, f"{folder_name}_portt5.npy")
-        if os.path.isfile(portt5_file):
-            print(f"{portt5_file} already exists, skipping.")
+        prott5_file = os.path.join(protein_subfolder, f"{folder_name}_prott5.npy")
+        if os.path.isfile(prott5_file):
+            print(f"{prott5_file} already exists, skipping.")
             continue
 
-        pdb_file = os.path.join(protein_subfolder, 'protein.pdb')
-        if os.path.isfile(pdb_file):
+        mol2_file = os.path.join(protein_subfolder, 'protein.mol2')
+        if os.path.isfile(mol2_file):
             print(f"Processing protein: {folder_name}")
-            sequence = extract_sequence_from_pdb(pdb_file)
-            portt5_features = generate_embeddings(sequence)
-            np.save(portt5_file, portt5_features)
-            print(f"Saved ProtT5 features to {portt5_file}")
+            sequence = extract_sequence_from_mol2(mol2_file)
+            prott5_features = generate_embeddings(sequence)
+            np.save(prott5_file, prott5_features)
+            print(f"Saved ProtT5 features to {prott5_file}")
         else:
-            print(f"Error: protein.pdb not found in {protein_subfolder}")
+            print(f"Error: protein.mol2 not found in {protein_subfolder}")
 
 
 def main() -> None:
     """Parse command-line arguments and process protein directory."""
     if len(sys.argv) != 2:
-        print("Usage: python generate_portt5_features_pdb.py <protein_folder>")
+        print("Usage: python generate_prott5_features.py <protein_folder>")
         sys.exit(1)
 
     protein_directory = sys.argv[1]

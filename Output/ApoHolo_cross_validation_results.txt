@@ -1,0 +1,67 @@
+=== 10-Fold Cross-Validation Testing ===
+
+===== Fold 1/10 =====
+DCA Top-n Success Rate: 0.7117
+DCA Top-(n+2) Success Rate: 0.7117
+DCC Success Rate: 0.7830
+DVO Success Rate: 0.4787
+
+===== Fold 2/10 =====
+DCA Top-n Success Rate: 0.7178
+DCA Top-(n+2) Success Rate: 0.7239
+DCC Success Rate: 0.7789
+DVO Success Rate: 0.4781
+
+===== Fold 3/10 =====
+DCA Top-n Success Rate: 0.6933
+DCA Top-(n+2) Success Rate: 0.6994
+DCC Success Rate: 0.7940
+DVO Success Rate: 0.4854
+
+===== Fold 4/10 =====
+DCA Top-n Success Rate: 0.7362
+DCA Top-(n+2) Success Rate: 0.7423
+DCC Success Rate: 0.7720
+DVO Success Rate: 0.4787
+
+===== Fold 5/10 =====
+DCA Top-n Success Rate: 0.7055
+DCA Top-(n+2) Success Rate: 0.7055
+DCC Success Rate: 0.7770
+DVO Success Rate: 0.4725
+
+===== Fold 6/10 =====
+DCA Top-n Success Rate: 0.7055
+DCA Top-(n+2) Success Rate: 0.7055
+DCC Success Rate: 0.7915
+DVO Success Rate: 0.4649
+
+===== Fold 7/10 =====
+DCA Top-n Success Rate: 0.7117
+DCA Top-(n+2) Success Rate: 0.7117
+DCC Success Rate: 0.7833
+DVO Success Rate: 0.4786
+
+===== Fold 8/10 =====
+DCA Top-n Success Rate: 0.7117
+DCA Top-(n+2) Success Rate: 0.7117
+DCC Success Rate: 0.7793
+DVO Success Rate: 0.4774
+
+===== Fold 9/10 =====
+DCA Top-n Success Rate: 0.7178
+DCA Top-(n+2) Success Rate: 0.7178
+DCC Success Rate: 0.7593
+DVO Success Rate: 0.4807
+
+===== Fold 10/10 =====
+DCA Top-n Success Rate: 0.6994
+DCA Top-(n+2) Success Rate: 0.6994
+DCC Success Rate: 0.7765
+DVO Success Rate: 0.4741
+
+=== 10-Fold Cross-Validation Summary ===
+Average DCA Top-n Success Rate: 0.7110
+Average DCA Top-(n+2) Success Rate: 0.7129
+Average DCC Success Rate: 0.7795
+Average DVO Success Rate: 0.4769
